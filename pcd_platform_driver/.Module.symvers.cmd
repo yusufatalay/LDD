@@ -1,1 +1,0 @@
-savedcmd_/home/desmond/workspace/ldd/custom_drivers/pcd_platform_driver/Module.symvers :=  scripts/mod/modpost -m -a      -o /home/desmond/workspace/ldd/custom_drivers/pcd_platform_driver/Module.symvers -T /home/desmond/workspace/ldd/custom_drivers/pcd_platform_driver/modules.order -i Module.symvers -e 

@@ -1,1 +1,0 @@
-savedcmd_/home/desmond/workspace/ldd/custom_drivers/pcd_platform_driver/pcd_device_setup.mod := printf '%s\n'   pcd_device_setup.o | awk '!x[$$0]++ { print("/home/desmond/workspace/ldd/custom_drivers/pcd_platform_driver/"$$0) }' > /home/desmond/workspace/ldd/custom_drivers/pcd_platform_driver/pcd_device_setup.mod
