@@ -114,7 +114,7 @@ int pcd_platform_driver_probe(struct platform_device *pdev) {
   if (!(dev_data->buffer)) {
     pr_err("cannot allocate memory for device buffer\n");
     ret = -ENOMEM;
-    goto out;
+    goto dev_data_free;
   }
 
   /*Save the device private data pointer in platform device structure*/
@@ -130,7 +130,7 @@ int pcd_platform_driver_probe(struct platform_device *pdev) {
   ret = cdev_add(&dev_data->cdev, dev_data->dev_num, 1);
   if (ret < 0) {
     pr_err("cannot add character device");
-    goto out;
+    goto dev_buffer_free;
   }
 
   /*Create device file for the detected platform device*/
@@ -150,6 +150,10 @@ int pcd_platform_driver_probe(struct platform_device *pdev) {
   /*Error handling*/
 cdev_del:
   cdev_del(&dev_data->cdev);
+dev_buffer_free:
+  devm_kfree(&pdev->dev, dev_data->buffer);
+dev_data_free:
+  devm_kfree(&pdev->dev,dev_data);
 out:
   pr_info("device probe failed\n");
   return ret;
