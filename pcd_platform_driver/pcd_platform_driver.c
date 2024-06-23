@@ -7,6 +7,7 @@
 #include <linux/platform_device.h>
 #include <linux/slab.h>
 #include <linux/uaccess.h>
+#include <linux/mod_devicetable.h>
 
 #undef pr_fmt
 #define pr_fmt(fmt) "%s :" fmt, __func__
@@ -93,7 +94,7 @@ int pcd_platform_driver_probe(struct platform_device *pdev) {
   }
 
   /*Dynamically allocate memory for the device private data*/
-  dev_data = devm_kzalloc(&pdev->dev,sizeof(*dev_data), GFP_KERNEL);
+  dev_data = devm_kzalloc(&pdev->dev, sizeof(*dev_data), GFP_KERNEL);
   if (!dev_data) {
     pr_err("cannot allocate memory for device\n");
     ret = -ENOMEM;
@@ -153,7 +154,7 @@ cdev_del:
 dev_buffer_free:
   devm_kfree(&pdev->dev, dev_data->buffer);
 dev_data_free:
-  devm_kfree(&pdev->dev,dev_data);
+  devm_kfree(&pdev->dev, dev_data);
 out:
   pr_info("device probe failed\n");
   return ret;
@@ -173,9 +174,26 @@ int pcd_platform_driver_remove(struct platform_device *pdev) {
   return 0;
 }
 
+struct platform_device_id pcdevs_ids[] = {
+    [0] =
+        {
+            .name = "pcdev-A1X",
+        },
+    [1] =
+        {
+            .name = "pcdev-B1X",
+        },
+    [2] =
+        {
+            .name = "pcdev-C1X",
+        },
+    {} /*Null termination*/
+
+};
 struct platform_driver pcd_platform_driver = {
     .probe = pcd_platform_driver_probe,
     .remove = pcd_platform_driver_remove,
+    .id_table = pcdevs_ids,
     .driver = {.name = "pseudo-char-device"}};
 
 #define MAX_DEVICES 10
