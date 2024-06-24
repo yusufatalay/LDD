@@ -1,0 +1,23 @@
+obj-m := pcd_platform_driver_device_tree.o
+ARCH=arm
+CROSS_COMPILE=arm-linux-gnueabihf-
+KERN_DIR = /home/desmond/workspace/ldd/source/linux_bbb_5_10_rt
+DTS_DIR = $(KERN_DIR)/arch/arm/boot/dts/am335x-boneblack.dtb
+HOST_KERN_DIR = /lib/modules/$(shell uname -r)/build/
+all:
+	make ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -C $(KERN_DIR)  M=$(PWD) modules
+
+clean:
+	make ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -C $(KERN_DIR)  M=$(PWD) clean
+
+help:
+	make ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -C $(KERN_DIR)  M=$(PWD) help
+
+host:
+	make -C $(HOST_KERN_DIR)  M=$(PWD) modules
+
+copy-dtb:
+	scp $(DTS_DIR) debian@192.168.7.2:/home/debian/drivers
+
+copy-driver:
+	scp *.ko debian@192.168.7.2:/home/debian/drivers
