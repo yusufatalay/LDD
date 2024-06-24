@@ -1,7 +1,7 @@
 This pseudo device driver supports 4 device instances.
 It implements read, write, seek functions.
 
-## Usage (Kernel Version < 6.4)
+## Usage (Kernel Version > 6.3)
 ```
   make clean
   make (host | all)
