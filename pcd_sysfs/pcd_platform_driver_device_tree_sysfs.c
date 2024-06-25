@@ -303,4 +303,4 @@ module_exit(pcd_driver_cleanup);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Yusuf Atalay");
-MODULE_DESCRIPTION("A pseudo character device driver which handles 4 devices");
+MODULE_DESCRIPTION("A pseudo character device driver with sysfs");
